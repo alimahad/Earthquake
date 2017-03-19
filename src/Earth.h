@@ -8,6 +8,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/glm/glm.hpp>
 #include <glm/glm/gtc/constants.hpp>
+#include "Sphere.h"
 
 namespace basicgraphics{
 class Earth {

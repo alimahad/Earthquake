@@ -11,7 +11,7 @@
 //const std:string DATA_DIR = "C:\\Users\\bjackson\\Documents\\classes\\comp494-graphics\\assignments\\asgn3-Earthquake\\data\\";
 
 // MAC path
-const std::string DATA_DIR = "/Users/Mahad/Downloads/EarthquakeStudent/data/";
+const std::string DATA_DIR = "C:\\Users\\thepr\\Source\\Repos\\Earthquake\\data\\";
 
 // The file to load for the earth texture.
 const std::string TEXTURE_PATH = DATA_DIR + "earth-2k.jpg";

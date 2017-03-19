@@ -1,0 +1,13 @@
+assimp/
+glfw/
+soil/
+.vs
+CMakeFiles
+Debug
+deps/
+deps/assimp
+
+*.vcxproj*
+*.sln
+CMakeCache.txt
+cmake_install.cmake

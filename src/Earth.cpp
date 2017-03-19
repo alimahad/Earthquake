@@ -13,8 +13,11 @@ Earth::Earth() {
     tex->setTexParameteri(GL_TEXTURE_WRAP_T, GL_REPEAT);
     tex->setTexParameteri(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     tex->setTexParameteri(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    textures.push_back(tex);
-	setupGeometry();
+    //textures.push_back(tex);
+	//setupGeometry();
+	std::vector<std::shared_ptr<Texture>> textures;
+	textures.push_back(tex);
+	_mesh3.reset(Sphere::generate(30, 60, textures));
 }
 
 void Earth::setupGeometry() {

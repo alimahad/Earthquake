@@ -36,7 +36,8 @@ protected:
     double lastTime;
     glm::vec3 eye_world;
     bool mouseDown; // Signifies whether the left mouse button is currently held down.
-    glm::vec2 lastMousePos;
+    glm::vec2 clickPos;
+	glm::vec2 lastPos;
 
   double currentTime;
   bool playing;

@@ -2,6 +2,10 @@
 #define Earthquake_h
 
 #include <string>
+#include <memory>
+#include "Mesh.h"
+#include "Sphere.h"
+//#include "Texture.h"
 
 #include "Date.h"
 
@@ -19,6 +23,8 @@ public:
   double getLatitude();
   
   double getMagnitude();
+
+  void draw(basicgraphics::GLSLProgram &shader,mat4 model);
   
 protected:
   

@@ -1,13 +1,39 @@
 #include <sstream>
 #include "Earthquake.h"
-
 using namespace std;
 
+
+namespace render {
+	shared_ptr<basicgraphics::Mesh> quake_model = NULL;
+	void init() {
+		if (quake_model == NULL) {
+			vector<shared_ptr<basicgraphics::Texture>> textures;
+			quake_model.reset(basicgraphics::Sphere::generate(30,60,textures));
+		}
+	}
+	void draw(basicgraphics::GLSLProgram &shader, mat4 model, Earthquake & quake) {
+		vec4 pos(1, 0, 0,1);
+		pos = glm::rotate(mat4(1), glm::radians((float)quake.getLatitude()), vec3(0, 1, 0))
+			* glm::rotate(mat4(1), glm::radians((float)quake.getLongitude()), vec3(0, 0, 1))
+			* pos;
+		model = glm::translate(model, vec3(pos));
+		model = glm::scale(model, vec3(0.25 * exp(quake.getMagnitude())/exp(9.f)));
+		shader.setUniform("model_mat", model);
+		quake_model->draw(shader);
+	}
+}
+void Earthquake::draw(basicgraphics::GLSLProgram & shader,mat4 model)
+{
+	render::draw(shader, model, *this);
+}
+
+
 Earthquake::Earthquake() {
-  
+	render::init();
 }
 
 Earthquake::Earthquake(std::string s) {
+	Earthquake();
   line = s;
 }
 
@@ -35,6 +61,8 @@ double Earthquake::getLatitude() {
 double Earthquake::getMagnitude() {
   return parseFloat(line.substr(66,4));
 }
+
+
 
 double Earthquake::parseFloat(std::string s) {
   stringstream ss(s);

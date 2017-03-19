@@ -51,8 +51,9 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
     eqd = EarthquakeDatabase(DATA_PATH);
     playbackScale = 86400;
-    currentTime = eqd.getByIndex(eqd.getMinIndex()).getDate().asSeconds();
-    
+	Date test = eqd.getByIndex(eqd.getMinIndex()).getDate();
+	double secs = eqd.getByIndex(eqd.getMinIndex()).getDate().asSeconds();
+	currentTime = eqd.getByIndex(eqd.getMinIndex()).getDate().asSeconds();
     initializeText();
     
     rotation = mat4(1.0);
@@ -72,102 +73,6 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
     
         Mesh::Vertex vert2;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//        float radius;
-//        float theta = radians(0.0f);
-
-//
-//        float x;
-//        float y;
-//        float height = 0.2f;
-//    
-//    float initPos = 0.0;
-//    
-//radius = 0.5f;
-//    
-//    for(int s = 0; s <= 1; s++){
-//        
-//
-//    
-//        for(int i = 0; i <= 360; i++){
-//    
-//            theta = 2 * pi<float>() * i/360.0;
-//            
-//            
-//            x = radius * cos(theta);
-//            y = radius * sin(theta);
-//    
-//            //vertices at the bottom edge of the cyclindrical tuble
-//            vert2.position = vec3(x,initPos,y);
-//            vert2.normal = vec3(x,initPos,y);
-//            vert2.texCoord0 = glm::vec2(-theta*0.31,1);
-//            cpuVertexArray2.push_back(vert2);
-//            cpuIndexArray2.push_back(p);
-//            
-//            p++;
-//            
-//            
-//            radius +=0.5f;
-//
-//            //vertices at the top edge of the cyclindrical tuble
-//            vert2.position = vec3(x,initPos + height,y);
-//            vert2.normal = vec3(x,initPos + height,y);
-//            vert2.texCoord0 = glm::vec2(-theta*0.31,0);
-//            cpuVertexArray2.push_back(vert2);
-//            cpuIndexArray2.push_back(p);
-//    
-//            radius = sqrt((x * x) + (y * y));
-//            p++;
-//    
-//        }
-//        
-//        initPos += height;
-//        radius -=0.5f;
-//        //radius -= 0.2f;
-//        
-//        
-//    }
-    
-//    //stack overflow  DOT opengl gaps in sphere thread
-//    float Slices = 15;
-//    float Stacks = 30;
-//    float Radius = 1.0;
-//    for (int i = 0; i <= Stacks; ++i){
-//        
-//        float longitudes   = i / (float) Stacks;
-//        float phi = longitudes * glm::pi <float> ();
-//        
-//        for (int i = 0; i <= Slices; ++i){
-//            
-//            float U = i / (float) Slices;
-//            float theta = U * (glm::pi <float> () * 4);
-//            
-//            float x = cosf (theta) * sinf (phi);
-//            float y = cosf (phi);
-//            float z = sinf (theta) * sinf (phi);
-//            x *= Radius;
-//            y *= Radius;
-//            z *= Radius;
-//            
-//            vert2.position = vec3(x,y,z);
-//            vert2.normal = vec3(x,y,z);
-//            vert2.texCoord0 = glm::vec2(-theta*0.31,0);
-//            cpuVertexArray2.push_back(vert2);
-//            cpuIndexArray2.push_back(p);
-//            
-//            p++;
-//
-//        }
-//    }
     
     float Slices = 30;
     float Stacks = 60;
@@ -289,7 +194,8 @@ void App::onEvent(shared_ptr<Event> event) {
 	// Rotate the earth when the user clicks and drags the mouse
 	else if (name == "mouse_btn_left_down") {
         mouseDown = true;
-        lastMousePos = event->get2DData();
+        clickPos = event->get2DData();
+		lastPos = clickPos;
     }
     else if (name == "mouse_btn_left_up") {
         mouseDown = false;
@@ -298,10 +204,16 @@ void App::onEvent(shared_ptr<Event> event) {
         // TODO: Update the "rotation" matrix based on how the user has dragged the mouse
         // Note: the mouse movement since the last frame is stored in dxy.
         if (mouseDown){
-            vec2 dxy = vec2(event->get2DData()) - lastMousePos;
-        }
+            vec2 dxy = vec2(event->get2DData()) - lastPos;
+			lastPos = event->get2DData();
+			vec2 axis = clickPos - vec2(_windowWidth / 2.f, _windowHeight / 2.f);
+			rotation = glm::rotate(mat4(1), dxy.x/_windowWidth, vec3(0, 1.f, 0.f))*rotation;
+			rotation = glm::rotate(mat4(1), dxy.y/_windowHeight, vec3(1, 0.f, 0.f))*rotation;
+		}
 	}
 }
+
+
 
 
 void App::onSimulation(double rdt) {
@@ -337,9 +249,15 @@ void App::onRenderGraphics() {
     _shader.setUniform("model_mat", model);
     _shader.setUniform("eye_world", eye_world);
 
+	
+	
+	//draw the night sky
+	_mesh3->draw(_shader);
+
+
+
 	// Draw the earth 
 	earth->draw(_shader);
-    _mesh3->draw(_shader);
 
 	// Draw earthquakes
 	int start = eqd.getIndexByDate(Date(currentTime - PLAYBACK_WINDOW));
@@ -349,7 +267,7 @@ void App::onRenderGraphics() {
 		// TODO: Draw earthquake e
         
 
-
+		e.draw(_shader,model);
         
         
         
