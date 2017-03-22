@@ -85,8 +85,9 @@ namespace basicgraphics {
 		const int numVertices = cpuVertexArray.size();
 		const int cpuVertexByteSize = sizeof(Mesh::Vertex) * numVertices;
 		const int cpuIndexByteSize = sizeof(int) * cpuIndexArray.size();
-		return (new Mesh(textures, GL_TRIANGLE_STRIP, GL_STATIC_DRAW, cpuVertexByteSize, cpuIndexByteSize, 0, cpuVertexArray, cpuIndexArray.size(), cpuIndexByteSize, &cpuIndexArray[0]));
-
+        
+        
+		return new Mesh(textures, GL_TRIANGLE_STRIP, GL_STATIC_DRAW, cpuVertexByteSize, cpuIndexByteSize, 0, cpuVertexArray, cpuIndexArray.size(), cpuIndexByteSize, &cpuIndexArray[0]);
 
 	}
     

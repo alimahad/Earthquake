@@ -48,6 +48,7 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
     
     earth.reset(new Earth());
+    sun.reset(new Earth());
     
     eqd = EarthquakeDatabase(DATA_PATH);
     playbackScale = 86400;
@@ -62,7 +63,6 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
     
     
-        //MAKING THE CYLINGER TUBE
         std::vector<Mesh::Vertex> cpuVertexArray2;
         std::vector<int> cpuIndexArray2;
         std::vector<std::shared_ptr<Texture>> textures2;
@@ -74,9 +74,9 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
         Mesh::Vertex vert2;
     
-    float Slices = 30;
-    float Stacks = 60;
-    float Radius = 4.0;
+    float Slices = 15;
+    float Stacks = 30;
+    float Radius = 0.4;
     //float Radius2 = 1.0;
 
     for (int i = 0; i <= Stacks; ++i){
@@ -248,9 +248,7 @@ void App::onRenderGraphics() {
     _shader.setUniform("projection_mat", projection);
     _shader.setUniform("model_mat", model);
     _shader.setUniform("eye_world", eye_world);
-
-	
-	
+    
 	//draw the night sky
 	_mesh3->draw(_shader);
 

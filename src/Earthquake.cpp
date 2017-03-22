@@ -1,5 +1,6 @@
 #include <sstream>
 #include "Earthquake.h"
+#include "Texture.h"
 using namespace std;
 
 
@@ -7,8 +8,18 @@ namespace render {
 	shared_ptr<basicgraphics::Mesh> quake_model = NULL;
 	void init() {
 		if (quake_model == NULL) {
-			vector<shared_ptr<basicgraphics::Texture>> textures;
-			quake_model.reset(basicgraphics::Sphere::generate(30,60,textures));
+            
+            // Note: TEXTURE_PATH is set in config.h
+            shared_ptr<basicgraphics::Texture> tex = basicgraphics::Texture::create2DTextureFromFile("/Users/Mahad/Downloads/Earthquake/data/earthquakeColors.jpg");
+            tex->setTexParameteri(GL_TEXTURE_WRAP_S, GL_REPEAT);
+            tex->setTexParameteri(GL_TEXTURE_WRAP_T, GL_REPEAT);
+            tex->setTexParameteri(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            tex->setTexParameteri(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            std::vector<std::shared_ptr<basicgraphics::Texture>> textures;
+			vector<shared_ptr<basicgraphics::Texture>> texture;
+            
+			quake_model.reset(basicgraphics::Sphere::generate(30,60,texture));
+
 		}
 	}
 	void draw(basicgraphics::GLSLProgram &shader, mat4 model, Earthquake & quake) {
