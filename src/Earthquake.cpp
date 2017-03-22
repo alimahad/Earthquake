@@ -12,9 +12,9 @@ namespace render {
 		}
 	}
 	void draw(basicgraphics::GLSLProgram &shader, mat4 model, Earthquake & quake) {
-		vec4 pos(1, 0, 0,1);
+		vec4 pos(0, 0, -1,1);
 		pos = glm::rotate(mat4(1), glm::radians((float)quake.getLatitude()), vec3(0, 1, 0))
-			* glm::rotate(mat4(1), glm::radians((float)quake.getLongitude()), vec3(0, 0, 1))
+			* glm::rotate(mat4(1), glm::radians((float)quake.getLongitude()), vec3(1, 0, 0))
 			* pos;
 		model = glm::translate(model, vec3(pos));
 		model = glm::scale(model, vec3(0.25 * exp(quake.getMagnitude())/exp(9.f)));

@@ -79,6 +79,7 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     float Radius = 4.0;
     //float Radius2 = 1.0;
 
+
     for (int i = 0; i <= Stacks; ++i){
         
         
@@ -258,6 +259,11 @@ void App::onRenderGraphics() {
 
 	// Draw the earth 
 	earth->draw(_shader);
+
+	Box zerozero(vec3(0, 0, 0), vec3(0.1, 0.1, -2), vec4(1, 1, 1,1));
+	zerozero.draw(_shader, model);
+	//Line zerozero(vec3(0,0,0),vec3(2,0,0),)
+
 
 	// Draw earthquakes
 	int start = eqd.getIndexByDate(Date(currentTime - PLAYBACK_WINDOW));
