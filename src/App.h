@@ -4,6 +4,7 @@
 #include "BaseApp.h"
 #include "EarthquakeDatabase.h"
 #include "Earth.h"
+#include "Sun.h"
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include <string.h>
@@ -50,7 +51,7 @@ protected:
     std::shared_ptr<Earth> earth;
     
     // Object representing the sun
-    std::shared_ptr<Earth> sun;
+    std::shared_ptr<Sun> sun;
 
 
   // Rotation matrix for the earth and displayed earthquakes

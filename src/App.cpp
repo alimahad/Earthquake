@@ -48,7 +48,7 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
     
     earth.reset(new Earth());
-    //sun.reset(new Earth());
+    sun.reset(new Sun());
     
     eqd = EarthquakeDatabase(DATA_PATH);
     playbackScale = 86400;
@@ -178,13 +178,11 @@ void App::onRenderGraphics() {
     _shader.setUniform("model_mat", model);
     _shader.setUniform("eye_world", eye_world);
     
-	//draw the night sky
-	//_mesh3->draw(_shader);
-
-
-
 	// Draw the earth 
 	earth->draw(_shader);
+    
+    sun->draw(_shader,model);
+
 
 	// Draw earthquakes
 	int start = eqd.getIndexByDate(Date(currentTime - PLAYBACK_WINDOW));

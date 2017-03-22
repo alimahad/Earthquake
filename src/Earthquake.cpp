@@ -1,7 +1,10 @@
 #include <sstream>
 #include "Earthquake.h"
 #include "Texture.h"
+
 using namespace std;
+using namespace glm;
+
 
 
 namespace render {
@@ -21,11 +24,11 @@ namespace render {
 	}
 	void draw(basicgraphics::GLSLProgram &shader, mat4 model, Earthquake & quake) {
 		vec4 pos(1, 0, 0,1);
-		pos = glm::rotate(mat4(1), glm::radians((float)quake.getLatitude()), vec3(0, 1, 0))
-			* glm::rotate(mat4(1), glm::radians((float)quake.getLongitude()), vec3(0, 0, 1))
+		pos = rotate(mat4(1), radians((float)quake.getLatitude()), vec3(0, 1, 0))
+			* rotate(mat4(1), radians((float)quake.getLongitude()), vec3(0, 0, 1))
 			* pos;
-		model = glm::translate(model, vec3(pos));
-		model = glm::scale(model, vec3(0.2 * exp(quake.getMagnitude())/exp(9.5f)));
+		model = translate(model, vec3(pos));
+		model = scale(model, vec3(0.2 * exp(quake.getMagnitude())/exp(9.5f)));
 		shader.setUniform("model_mat", model);
         
         shared_ptr<basicgraphics::Texture> tex = basicgraphics::Texture::create2DTextureFromFile("/Users/Mahad/Downloads/Earthquake/data/earthquakeColors.jpg");
@@ -34,8 +37,8 @@ namespace render {
         tex->setTexParameteri(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
         tex->setTexParameteri(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         tex->setTexParameteri(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        std::vector<std::shared_ptr<basicgraphics::Texture>> textures;
-        vector<shared_ptr<basicgraphics::Texture>> texture;
+        vector<shared_ptr<basicgraphics::Texture>> textures;
+        //vector<shared_ptr<basicgraphics::Texture>> texture;
         
 
         textures.push_back(tex);
