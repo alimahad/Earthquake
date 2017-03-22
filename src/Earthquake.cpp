@@ -9,36 +9,41 @@ using namespace glm;
 
 namespace render {
 	shared_ptr<basicgraphics::Mesh> quake_model = NULL;
-    
+	shared_ptr<basicgraphics::Texture> tex = NULL;
+
 	void init() {
 		if (quake_model == NULL) {
             
             //path to a spectrum of earthquake colors ranging from yellow to red
-            shared_ptr<basicgraphics::Texture> tex = basicgraphics::Texture::create2DTextureFromFile("/Users/Mahad/Downloads/Earthquake/data/earthquakeColors.jpg");
+            shared_ptr<basicgraphics::Texture> tex = basicgraphics::Texture::create2DTextureFromFile(DATA_DIR + "earthquakeColors.jpg");
             std::vector<std::shared_ptr<basicgraphics::Texture>> textures;
             //int slices, int stacks, std::vector<std::shared_ptr<Texture>> &texture, bool textured, float u, float v);
             //bool textured is to decide if the sphere texture should be tesellated, or if it should be a solid u,v coordinate
 			quake_model.reset(basicgraphics::Sphere::generate(30,60,textures,0,0.0f,0.5f));
 
 		}
+		if (tex == NULL) {
+			tex = basicgraphics::Texture::create2DTextureFromFile(DATA_DIR + "earthquakeColors.jpg");
+			tex->setTexParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			tex->setTexParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			tex->setTexParameteri(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+			tex->setTexParameteri(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			tex->setTexParameteri(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
 	}
+
 	void draw(basicgraphics::GLSLProgram &shader, mat4 model, Earthquake & quake) {
-		vec4 pos(1, 0, 0,1);
-		pos = rotate(mat4(1), radians((float)quake.getLatitude()), vec3(0, 1, 0))
-			* rotate(mat4(1), radians((float)quake.getLongitude()), vec3(0, 0, 1))
+		vec4 pos(0, 0, -1,1);
+		pos = glm::rotate(mat4(1), glm::radians((float)quake.getLatitude()), vec3(0, 1, 0))
+			* glm::rotate(mat4(1), glm::radians((float)quake.getLongitude()), vec3(1, 0, 0))
 			* pos;
 		model = translate(model, vec3(pos));
 		model = scale(model, vec3(0.2 * exp(quake.getMagnitude())/exp(9.5f)));
 		shader.setUniform("model_mat", model);
         
-        shared_ptr<basicgraphics::Texture> tex = basicgraphics::Texture::create2DTextureFromFile("/Users/Mahad/Downloads/Earthquake/data/earthquakeColors.jpg");
-        tex->setTexParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        tex->setTexParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        tex->setTexParameteri(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-        tex->setTexParameteri(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        tex->setTexParameteri(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        vector<shared_ptr<basicgraphics::Texture>> textures;
-        //vector<shared_ptr<basicgraphics::Texture>> texture;
+
+        std::vector<std::shared_ptr<basicgraphics::Texture>> textures;
+        vector<shared_ptr<basicgraphics::Texture>> texture;
         
 
         textures.push_back(tex);

@@ -20,7 +20,6 @@ namespace basicgraphics {
 	{
 
 	}
-	// so much overengineering.... please stop it bret
 	Mesh* Sphere::generate(int slices, int stacks,std::vector<std::shared_ptr<Texture>> &textures, bool textured, float uCoord, float vCoord) {
 
 		std::vector<Mesh::Vertex> cpuVertexArray;

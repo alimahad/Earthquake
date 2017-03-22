@@ -7,6 +7,8 @@
 #include "Sphere.h"
 //#include "Texture.h"
 
+#include "config.h"
+
 #include "Date.h"
 
 class Earthquake {
