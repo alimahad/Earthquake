@@ -21,15 +21,10 @@ namespace basicgraphics {
 
 	}
 	// so much overengineering.... please stop it bret
-	Mesh* Sphere::generate(int slices, int stacks,std::vector<std::shared_ptr<Texture>> &textures) {
+	Mesh* Sphere::generate(int slices, int stacks,std::vector<std::shared_ptr<Texture>> &textures, bool textured, float uCoord, float vCoord) {
 
 		std::vector<Mesh::Vertex> cpuVertexArray;
 		std::vector<int> cpuIndexArray;
-		//std::vector<std::shared_ptr<Texture>> textures;
-		////std::shared_ptr<Texture> tex = Texture::create2DTextureFromFile("earthSampleImage.jpg");
-		//textures.push_back(tex);
-
-
 		Mesh::Vertex vert;
 		int p = 0;
 
@@ -58,7 +53,11 @@ namespace basicgraphics {
 
 				vert.position = vec3(x, y, z);
 				vert.normal = vec3(x, y, z);
+                if(textured == 1){
 				vert.texCoord0 = glm::vec2(U + (U1 - U), V);
+                } else {
+                    vert.texCoord0 = glm::vec2(uCoord, vCoord);
+                }
 				cpuVertexArray.push_back(vert);
 				cpuIndexArray.push_back(p);
 				p++;
@@ -73,7 +72,11 @@ namespace basicgraphics {
 
 				vert.position = vec3(x2, y2, z2);
 				vert.normal = vec3(x2, y2, z2);
+                if(textured == 1){
 				vert.texCoord0 = glm::vec2(U1, V1);
+                } else {
+                    vert.texCoord0 = glm::vec2(uCoord, vCoord);
+                }
 				cpuVertexArray.push_back(vert);
 				cpuIndexArray.push_back(p);
 				p++;
@@ -85,8 +88,9 @@ namespace basicgraphics {
 		const int numVertices = cpuVertexArray.size();
 		const int cpuVertexByteSize = sizeof(Mesh::Vertex) * numVertices;
 		const int cpuIndexByteSize = sizeof(int) * cpuIndexArray.size();
-		return (new Mesh(textures, GL_TRIANGLE_STRIP, GL_STATIC_DRAW, cpuVertexByteSize, cpuIndexByteSize, 0, cpuVertexArray, cpuIndexArray.size(), cpuIndexByteSize, &cpuIndexArray[0]));
-
+        
+        
+		return new Mesh(textures, GL_TRIANGLE_STRIP, GL_STATIC_DRAW, cpuVertexByteSize, cpuIndexByteSize, 0, cpuVertexArray, cpuIndexArray.size(), cpuIndexByteSize, &cpuIndexArray[0]);
 
 	}
     
