@@ -20,7 +20,7 @@ using namespace std;
 App::App(int argc, char** argv, std::string windowName, int windowWidth, int windowHeight) : BaseApp(argc, argv, windowName, windowWidth, windowHeight) {
 
     lastTime = glfwGetTime();
-    glClearColor(0.1f, 0.12f, 0.15f, 1.0f);
+    glClearColor(0.f,0.f,0.f, 1.0f);
     
     
     eye_world = glm::vec3(-2, 1, 2);
