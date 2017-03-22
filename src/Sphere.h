@@ -28,7 +28,7 @@ namespace basicgraphics {
 		Sphere(const glm::vec3 &position, const float radius, const glm::vec4 &color);
 		virtual ~Sphere();
 
-		static Mesh* generate(int slices, int stacks, std::vector<std::shared_ptr<Texture>> &tex);
+		static Mesh* generate(int slices, int stacks, std::vector<std::shared_ptr<Texture>> &tex, bool textured, float u, float v);
 
 		virtual void draw(GLSLProgram &shader, const glm::mat4 &modelMatrix);
 
