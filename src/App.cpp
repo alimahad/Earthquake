@@ -184,8 +184,8 @@ void App::onRenderGraphics() {
     sun->draw(_shader,model);
 
 
-	Box zerozero(vec3(0, 0, 0), vec3(0.1, 0.1, -2), vec4(1, 1, 1,1));
-	zerozero.draw(_shader, model);
+	//Box zerozero(vec3(0, 0, 0), vec3(0.1, 0.1, -2), vec4(1, 1, 1,1));
+	//zerozero.draw(_shader, model);
 	//Line zerozero(vec3(0,0,0),vec3(2,0,0),)
 
 

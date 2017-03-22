@@ -13,9 +13,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 
-set (SOURCEFILES src/main.cpp src/Date.cpp src/Earth.cpp src/Earthquake.cpp src/EarthquakeDatabase.cpp src/BaseApp.cpp src/App.cpp src/Event.cpp src/Mesh.cpp src/Model.cpp src/GLSLProgram.cpp src/Texture.cpp src/Box.cpp src/Sphere.cpp src/Cone.cpp src/Cylinder.cpp src/Line.cpp src/glad/src/glad.c)
+set (SOURCEFILES src/main.cpp src/Date.cpp src/Earth.cpp src/Earthquake.cpp src/EarthquakeDatabase.cpp src/BaseApp.cpp src/App.cpp src/Event.cpp src/Mesh.cpp src/Model.cpp src/GLSLProgram.cpp src/Texture.cpp src/Box.cpp src/Sphere.cpp src/Cone.cpp src/Cylinder.cpp src/Line.cpp src/glad/src/glad.c src/Sun.cpp)
 
-set (HEADERFILES src/config.h src/fontstash.h src/glfontstash.h src/stb_truetype.h src/Date.h src/Earth.h src/Earthquake.h src/EarthquakeDatabase.h src/BaseApp.h src/App.h src/Event.h src/Mesh.h src/Model.h src/GLSLProgram.h src/Texture.h src/Box.h src/Sphere.h src/Cone.h src/Cylinder.h src/Line.h)
+set (HEADERFILES src/config.h src/fontstash.h src/glfontstash.h src/stb_truetype.h src/Date.h src/Earth.h src/Earthquake.h src/EarthquakeDatabase.h src/BaseApp.h src/App.h src/Event.h src/Mesh.h src/Model.h src/GLSLProgram.h src/Texture.h src/Box.h src/Sphere.h src/Cone.h src/Cylinder.h src/Line.h src/Sun.h)
 
 source_group("Header Files" FILES ${HEADERFILES})
 

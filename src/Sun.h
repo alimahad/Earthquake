@@ -9,7 +9,7 @@
 #include <glm/glm/glm.hpp>
 #include <glm/glm/gtc/constants.hpp>
 #include "Sphere.h"
-
+#include <memory>
     class Sun {
     public:
         Sun();
@@ -19,7 +19,9 @@
         void draw(basicgraphics::GLSLProgram &shader,mat4 model);
         
     protected:
-        
+		std::shared_ptr<basicgraphics::Texture> tex;
+		std::shared_ptr<basicgraphics::Mesh> model1;
+
         // Stores the earth texture data
         //std::vector< std::shared_ptr<Texture> > textures1;
         

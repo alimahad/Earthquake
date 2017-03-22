@@ -29,10 +29,11 @@ void Earth::setupGeometry() {
 
 glm::vec3 Earth::getPosition(double latitude, double longitude) {
     
-    // TODO: Given a latitude and longitude as input, return the corresponding 3D x,y,z position
-    // on your Earth geometry
-    
-    return vec3(1.0); // Dummy return so that it compiles. Replace me with the correct position.
+	vec4 pos(0, 0, -1, 1);
+	pos = glm::rotate(mat4(1), glm::radians((float)latitude), vec3(0, 1, 0))
+		* glm::rotate(mat4(1), glm::radians((float)longitude), vec3(1, 0, 0))
+		* pos;
+	return vec3(pos);
 }
 
 
