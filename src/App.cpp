@@ -48,7 +48,7 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     
     
     earth.reset(new Earth());
-    sun.reset(new Earth());
+    //sun.reset(new Earth());
     
     eqd = EarthquakeDatabase(DATA_PATH);
     playbackScale = 86400;
@@ -60,80 +60,9 @@ App::App(int argc, char** argv, std::string windowName, int windowWidth, int win
     rotation = mat4(1.0);
     playing = true;
     
-    
-    
-    
-        std::vector<Mesh::Vertex> cpuVertexArray2;
-        std::vector<int> cpuIndexArray2;
-        std::vector<std::shared_ptr<Texture>> textures2;
-        std::shared_ptr<Texture> tex2 = Texture::create2DTextureFromFile("sun.jpg");
-        textures2.push_back(tex2);
-    
-        int p = 0;
-    
-    
-        Mesh::Vertex vert2;
-    
-    float Slices = 15;
-    float Stacks = 30;
-    float Radius = 0.4;
-    //float Radius2 = 1.0;
-
-    for (int i = 0; i <= Stacks; ++i){
-        
-        
-        
-        for (int j = 0; j <= Slices; ++j){
-            
-            float V   = i / Stacks;
-            float phi = V * glm::pi <float> ();
-            
-            float U = j / Slices;
-            float U1 = (j+1) / Slices;
-
-            float theta = 2 * U * (glm::pi <float>());
-
-
-            //mathinsight(DOT)org/spherical_coordinates
-            float z = Radius * sinf (phi) * cosf (theta);
-            float x = Radius *sinf (phi) * sinf (theta);
-            float y = Radius * cosf (phi);
-            
-            vert2.position = vec3(x,y,z);
-            vert2.normal = vec3(0,0,0);
-            vert2.texCoord0 = glm::vec2(U+(U1-U)+0.6,V);
-            cpuVertexArray2.push_back(vert2);
-            cpuIndexArray2.push_back(p);
-            
-            p++;
-            
-            float V1   = (i+1) / Stacks;
-            float phi2 = V1 * glm::pi <float> ();
-            
-            float z2 = Radius * sinf (phi2) * cosf (theta);
-            float x2 = Radius *sinf (phi2) * sinf (theta);
-            float y2 = Radius * cosf (phi2);
-            
-            vert2.position = vec3(x2,y2,z2);
-            vert2.normal = vec3(0,0,0);
-            vert2.texCoord0 = glm::vec2(U1+0.6,V1);
-            cpuVertexArray2.push_back(vert2);
-            cpuIndexArray2.push_back(p);
-            
-            p++;
-
-            
-        }
-        
-        
-        
-    }
-    
-        const int numVertices2 = cpuVertexArray2.size();
-        const int cpuVertexByteSize2 = sizeof(Mesh::Vertex) * numVertices2;
-        const int cpuIndexByteSize2 = sizeof(int) * cpuIndexArray2.size();
-        _mesh3.reset(new Mesh(textures2, GL_TRIANGLE_STRIP, GL_STATIC_DRAW, cpuVertexByteSize2, cpuIndexByteSize2, 0, cpuVertexArray2, cpuIndexArray2.size(), cpuIndexByteSize2, &cpuIndexArray2[0]));
-
+    std::vector<std::shared_ptr<Texture>> textures2;
+    std::shared_ptr<Texture> tex2 = Texture::create2DTextureFromFile("sun.jpg");
+    textures2.push_back(tex2);
 
 }
 
@@ -250,7 +179,7 @@ void App::onRenderGraphics() {
     _shader.setUniform("eye_world", eye_world);
     
 	//draw the night sky
-	_mesh3->draw(_shader);
+	//_mesh3->draw(_shader);
 
 
 
@@ -268,10 +197,7 @@ void App::onRenderGraphics() {
 		e.draw(_shader,model);
         
         
-        
 	}
-    
-    
     
     drawText();
 }
